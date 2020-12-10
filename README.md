@@ -4,4 +4,4 @@ Alpha, beta and gamma diversities are computed and visualized using formulas and
 - L. Jost, “Entropy and diversity”, Oikos, vol. 113, pp. 363–375, Jan. 2006. 
 - L. Jost, “Partitioning diversity into independent alpha and beta components”, Ecology, vol. 88, pp. 2427–2439, Oct. 2008.
 
-The repository contains a Jupyter notebook (`.ipynb`) and an RMarkdown file (`.rmd`). Knitted RMarkdown may be found on RPubs <a ref = 'https://rpubs.com/abarghi/700388'>here</a>.
+The repository contains a Jupyter notebook (`.ipynb`) and an RMarkdown file (`.rmd`). Knitted RMarkdown may be found on RPubs <a href = 'https://rpubs.com/abarghi/700388'>here</a>.
