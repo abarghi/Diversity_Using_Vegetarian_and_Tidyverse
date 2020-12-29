@@ -1092,3 +1092,112 @@ print(qsum2_b_w_v %>%
         xlab(TeX('$q$')) +
         ylab(TeX('$\\beta$ Diversity')))  
 ```
+
+# MacArthur’s Homogeneity Measure
+
+### Order 0 (Richness)
+
+```{r}
+# using formulas
+alep_u_m$Alpha_Richness / giml_u_m$Gamma_Richness 
+# using vegetarian::M.homog
+M.homog(df[, -c(1, 2)], q = 0)
+# alternatively
+alep_u_v$Alpha_Richness / giml_u_v$Gamma_Richness 
+```
+
+### Order 1 (Shannon)
+
+```{r}
+# using formulas
+alep_u_m$Alpha_Shannon / giml_u_m$Gamma_Shannon
+# using vegetarian::M.homog
+M.homog(df[, -c(1, 2)])
+# using vegetarian
+alep_u_v$Alpha_Shannon / giml_u_v$Gamma_Shannon
+```
+
+### Order 2 (Greenberg)
+
+```{r}
+# using formulas
+alep_u_m$Alpha_Greenberg / giml_u_m$Gamma_Greenberg
+# using vegetarian::M.homog
+M.homog(df[, -c(1, 2)], q = 2)
+# alternatively
+alep_u_v$Alpha_Greenberg / giml_u_v$Gamma_Greenberg
+```
+
+# Relative Homogeneity
+
+## Unweighted
+
+```{r}
+# using formulas
+homog_u_m <- data.frame(list((1 / bet_u_m$Beta_Richness - 1 / N) / (1 - 1 / N),
+                             (1 / bet_u_m$Beta_Shannon - 1 / N) / (1 - 1 / N), 
+                             (1 / bet_u_m$Beta_Greenberg - 1 / N) / (1 - 1 / N)))
+
+names(homog_u_m) <- c('Order 0 Homogeneity', 
+                      'Order 1 Homogeneity', 
+                      'Order 2 Homogeneity')
+
+homog_u_m
+```
+
+```{r}
+# using vegetarian::Rel.homog
+Rel.homog(df[, -c(1, 2)])
+```
+
+## Weighted
+
+```{r}
+# using formulas
+d_1_w_m <- exp(-sum(df$Weight * log(df$Weight))) 
+
+(1 / bet_w_m$Beta_Shannon - 1 / d_1_w_m) / (1 - 1 / d_1_w_m)
+
+(1 / bet_u_m$Beta_Shannon - 1 / d_1_w_m) / (1 - 1 / d_1_w_m)
+```
+
+```{r}
+# using vegetarian::Rel.homog
+Rel.homog(df[, -c(1, 2)], wt = df$Weight)
+# is there a bug in vegetarian::Rel.homog?
+```
+
+# Turnover
+
+### Order 0 (Richness)
+
+```{r}
+# using formulas
+(bet_u_m$Beta_Richness - 1) / (N - 1)
+# using vegetarian::turnover
+turnover(df[, -c(1, 2)], q = 0)
+# alternatively
+(bet_u_v$Beta_Richness - 1) / (N - 1)
+```
+
+### Order 1 (Shannon)
+
+```{r}
+# using formulas
+(bet_u_m$Beta_Shannon - 1) / (N - 1)
+# using vegetarian::turnover
+turnover(df[, -c(1, 2)])
+# alternatively
+(bet_u_v$Beta_Shannon - 1) / (N - 1)
+```
+
+### Order 2 (Greenberg)
+
+```{r}
+# using formulas
+(bet_u_m$Beta_Greenberg - 1) / (N - 1)
+# using vegetarian::turnover
+turnover(df[, -c(1, 2)], q = 2)
+# alternatively
+(bet_u_v$Beta_Greenberg - 1) / (N - 1)
+```
